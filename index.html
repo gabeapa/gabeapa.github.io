@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name — Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fafaf8;
+      --bg-card: #ffffff;
+      --text: #1a1a18;
+      --muted: #6b6b67;
+      --border: #e4e4df;
+      --accent: #1a1a18;
+      --tag-bg: #f0f0eb;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(250, 250, 248, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* LAYOUT */
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 7rem 0 5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--muted);
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--muted);
+    }
+    .hero-bio {
+      max-width: 520px;
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .btn-primary {
+      display: inline-block;
+      padding: 10px 22px;
+      background: var(--text);
+      color: var(--bg);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.8; }
+    .btn-ghost {
+      display: inline-block;
+      padding: 10px 0;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--text); border-color: var(--text); }
+
+    /* SECTIONS */
+    section { padding: 4.5rem 0; border-bottom: 1px solid var(--border); }
+    section:last-child { border-bottom: none; }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .about-text p {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-skills h3 {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.01em;
+    }
+    .skill-group { margin-bottom: 1.5rem; }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: var(--tag-bg);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      border-radius: 2px;
+    }
+
+    /* PROJECTS */
+    .projects-list { display: flex; flex-direction: column; gap: 0; }
+    .project-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1.5rem;
+      align-items: start;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.2s;
+    }
+    .project-item:last-child { border-bottom: none; }
+    .project-item:hover { opacity: 0.65; }
+    .project-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .project-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.01em;
+    }
+    .project-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 500px;
+      margin-bottom: 0.75rem;
+    }
+    .project-arrow {
+      font-size: 20px;
+      color: var(--muted);
+      margin-top: 1.8rem;
+    }
+
+    /* EXPERIENCE */
+    .exp-list { display: flex; flex-direction: column; gap: 0; }
+    .exp-item {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      padding-top: 3px;
+    }
+    .exp-role {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .exp-company {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+    .exp-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--muted);
+    }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .contact-intro {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .contact-links { display: flex; flex-direction: column; gap: 0; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 400;
+      transition: opacity 0.2s;
+    }
+    .contact-link:first-child { border-top: 1px solid var(--border); }
+    .contact-link:hover { opacity: 0.55; }
+    .contact-link span { color: var(--muted); font-size: 12px; }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 0;
+      text-align: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ANIMATION */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero > * { animation: fadeUp 0.6s ease both; }
+    .hero-eyebrow { animation-delay: 0.05s; }
+    .hero h1    { animation-delay: 0.15s; }
+    .hero-bio   { animation-delay: 0.25s; }
+    .hero-cta   { animation-delay: 0.35s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      .hero { padding: 4rem 0 3rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.4rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .project-item { grid-template-columns: 1fr; }
+      .project-arrow { display: none; }
+      .nav-links { gap: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-logo" href="#">YN.dev</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Work</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="container">
+        <p class="hero-eyebrow">Available for work</p>
+        <h1>Your Name<br /><em>Software Engineer</em></h1>
+        <p class="hero-bio">
+          I build clean, fast, and thoughtful software. Focused on backend systems, developer tooling, and the occasional side project that gets out of hand.
+        </p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn-primary">View my work</a>
+          <a href="#contact" class="btn-ghost">Get in touch →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <p class="section-label">About</p>
+        <div class="about-grid">
+          <div class="about-text">
+            <p>
+              Hi, I'm [Your Name]. I'm a software engineer with X years of experience building products people actually use.
+            </p>
+            <p>
+              I care deeply about code quality, thoughtful architecture, and shipping things that matter. When I'm not coding, I'm [hobby / interest].
+            </p>
+            <p>
+              Currently based in [City]. Open to remote roles and select on-site opportunities.
+            </p>
+          </div>
+          <div class="about-skills">
+            <div class="skill-group">
+              <h3>Languages</h3>
+              <div class="tags">
+                <span class="tag">TypeScript</span>
+                <span class="tag">Python</span>
+                <span class="tag">Go</span>
+                <span class="tag">Rust</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <h3>Frameworks &amp; tools</h3>
+              <div class="tags">
+                <span class="tag">React</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">PostgreSQL</span>
+                <span class="tag">Docker</span>
+                <span class="tag">AWS</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <h3>Interests</h3>
+              <div class="tags">
+                <span class="tag">Compilers</span>
+                <span class="tag">Dev tooling</span>
+                <span class="tag">Open source</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="container">
+        <p class="section-label">Selected work</p>
+        <div class="projects-list">
+
+          <a class="project-item" href="#" target="_blank" rel="noopener">
+            <div>
+              <p class="project-num">01</p>
+              <h2 class="project-title">Project Alpha</h2>
+              <p class="project-desc">A short description of what this project does and why it's interesting. What problem it solves, who uses it.</p>
+              <div class="tags">
+                <span class="tag">TypeScript</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">PostgreSQL</span>
+              </div>
+            </div>
+            <div class="project-arrow">↗</div>
+          </a>
+
+          <a class="project-item" href="#" target="_blank" rel="noopener">
+            <div>
+              <p class="project-num">02</p>
+              <h2 class="project-title">Project Beta</h2>
+              <p class="project-desc">A short description of what this project does and why it's interesting. What problem it solves, who uses it.</p>
+              <div class="tags">
+                <span class="tag">Python</span>
+                <span class="tag">FastAPI</span>
+                <span class="tag">React</span>
+              </div>
+            </div>
+            <div class="project-arrow">↗</div>
+          </a>
+
+          <a class="project-item" href="#" target="_blank" rel="noopener">
+            <div>
+              <p class="project-num">03</p>
+              <h2 class="project-title">Project Gamma</h2>
+              <p class="project-desc">A short description of what this project does and why it's interesting. What problem it solves, who uses it.</p>
+              <div class="tags">
+                <span class="tag">Go</span>
+                <span class="tag">Docker</span>
+                <span class="tag">AWS</span>
+              </div>
+            </div>
+            <div class="project-arrow">↗</div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <div class="container">
+        <p class="section-label">Experience</p>
+        <div class="exp-list">
+
+          <div class="exp-item">
+            <p class="exp-date">2022 — Present</p>
+            <div>
+              <p class="exp-role">Senior Software Engineer</p>
+              <p class="exp-company">Company Name · Full-time</p>
+              <p class="exp-desc">Built and maintained [key thing]. Led [initiative]. Reduced [metric] by X%.</p>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <p class="exp-date">2020 — 2022</p>
+            <div>
+              <p class="exp-role">Software Engineer</p>
+              <p class="exp-company">Another Company · Full-time</p>
+              <p class="exp-desc">Worked on [product area]. Collaborated with [team]. Shipped [feature].</p>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <p class="exp-date">2019 — 2020</p>
+            <div>
+              <p class="exp-role">Software Engineering Intern</p>
+              <p class="exp-company">Startup Name · Internship</p>
+              <p class="exp-desc">Contributed to [project]. Learned [skill]. First production code at [company].</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container">
+        <p class="section-label">Contact</p>
+        <div class="contact-grid">
+          <div>
+            <p class="contact-intro">Let's build something together.</p>
+          </div>
+          <div class="contact-links">
+            <a class="contact-link" href="mailto:you@example.com">
+              Email <span>you@example.com</span>
+            </a>
+            <a class="contact-link" href="https://github.com/yourusername" target="_blank" rel="noopener">
+              GitHub <span>@yourusername</span>
+            </a>
+            <a class="contact-link" href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener">
+              LinkedIn <span>/in/yourprofile</span>
+            </a>
+            <a class="contact-link" href="/resume.pdf" target="_blank" rel="noopener">
+              Resume <span>Download PDF</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Your Name · Built with care</p>
+    </div>
+  </footer>
+
+</body>
+</html>
